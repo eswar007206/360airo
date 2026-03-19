@@ -1,0 +1,195 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Instrument+Sans:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 240 60% 3%;
+    --foreground: 0 0% 98%;
+
+    --card: 240 50% 5%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 240 50% 5%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 220 100% 50%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 230 100% 65%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 240 40% 12%;
+    --muted-foreground: 240 20% 65%;
+
+    --accent: 210 100% 60%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 350 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 240 40% 15%;
+    --input: 240 40% 15%;
+    --ring: 220 100% 50%;
+
+    --radius: 1rem;
+
+    --light-card: 0 0% 98%;
+    --light-card-foreground: 220 20% 10%;
+    --light-card-muted: 220 10% 42%;
+
+    --sidebar-background: 220 20% 3%;
+    --sidebar-foreground: 0 0% 96%;
+    --sidebar-primary: 211 100% 50%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 220 15% 10%;
+    --sidebar-accent-foreground: 0 0% 96%;
+    --sidebar-border: 220 15% 13%;
+    --sidebar-ring: 211 100% 50%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Instrument Sans', 'Inter', system-ui, -apple-system, sans-serif;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    letter-spacing: -0.025em;
+  }
+}
+
+@layer utilities {
+  .glass-card {
+    @apply bg-card/40 backdrop-blur-[40px] border border-white/20 rounded-3xl;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1), 0 8px 32px rgba(0, 0, 0, 0.2);
+  }
+
+  .glass-card-hover {
+    @apply glass-card transition-all duration-500 hover:border-white/40 hover:bg-card/50 hover:scale-[1.02] hover:shadow-[0_20px_40px_rgba(0,0,0,0.3),_inset_0_0_0_1px_rgba(255,255,255,0.2)];
+    transform-style: preserve-3d;
+  }
+
+  .light-card {
+    background: hsl(var(--light-card));
+    color: hsl(var(--light-card-foreground));
+    @apply rounded-2xl shadow-lg border border-white/20;
+  }
+
+  .light-card-hover {
+    background: hsl(var(--light-card));
+    color: hsl(var(--light-card-foreground));
+    @apply rounded-2xl shadow-lg border border-white/20 transition-all duration-700 hover:shadow-2xl hover:-translate-y-1;
+  }
+
+  .glow-blue {
+    box-shadow: 0 0 20px hsl(211 100% 50% / 0.35), 0 0 60px hsl(211 100% 50% / 0.1);
+  }
+
+  .gradient-text {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, hsl(211 100% 60%), hsl(199 94% 67%));
+  }
+
+  /* Animated aurora background — replaces video */
+  .aurora-bg {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+  }
+
+  .aurora-bg::before,
+  .aurora-bg::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.25;
+    animation: aurora-drift 20s ease-in-out infinite alternate;
+  }
+
+  .aurora-bg::before {
+    width: 70%;
+    height: 60%;
+    top: -20%;
+    left: -10%;
+    background: radial-gradient(ellipse, hsl(211 100% 50% / 0.4), hsl(240 60% 40% / 0.2), transparent 70%);
+  }
+
+  .aurora-bg::after {
+    width: 60%;
+    height: 50%;
+    bottom: -15%;
+    right: -10%;
+    background: radial-gradient(ellipse, hsl(199 94% 67% / 0.3), hsl(260 50% 50% / 0.15), transparent 70%);
+    animation-delay: -10s;
+    animation-direction: alternate-reverse;
+  }
+
+  @keyframes aurora-drift {
+    0% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(5%, 3%) scale(1.05); }
+    66% { transform: translate(-3%, -2%) scale(0.97); }
+    100% { transform: translate(2%, -4%) scale(1.02); }
+  }
+
+  /* Subtle grain texture */
+  .grain-overlay {
+    position: absolute;
+    inset: 0;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+
+  .section-padding {
+    @apply py-20 md:py-28;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Dashboard frame */
+  .dashboard-frame {
+    @apply rounded-2xl border border-white/[0.08] bg-card/90 backdrop-blur-sm overflow-hidden;
+    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.5), 0 0 50px hsl(211 100% 50% / 0.06);
+  }
+
+  /* Phone mockup */
+  .phone-frame {
+    @apply rounded-[2.5rem] border-[3px] border-white/[0.12] bg-card overflow-hidden;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
+  }
+
+  /* Scroll-linked text highlight */
+  .text-reveal-line {
+    background-size: 200% 100%;
+    background-position: 100% 0;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-image: linear-gradient(
+      90deg,
+      hsl(var(--foreground)) 50%,
+      hsl(var(--muted-foreground)) 50%
+    );
+    transition: background-position 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .text-reveal-line.revealed {
+    background-position: 0 0;
+  }
+}
